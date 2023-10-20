@@ -1,5 +1,5 @@
 #Messaging-App-Frontend
-<img width="1278" alt="Screen Shot 2023-09-14 at 5 17 38 AM" src=["https://github.com/emmaeng680/messaging-app-mern/public/messagingappfrontendpic.png"](https://github.com/emmaeng680/messaging-app-mern/blob/master/src/assets/images/messagingappfrontendpic.png)>
+<img width="1278" alt="Screen Shot 2023-09-14 at 5 17 38 AM" src="https://github.com/emmaeng680/messaging-app-mern/blob/master/src/assets/images/messagingappfrontendpic.png">
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
