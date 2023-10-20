@@ -1,4 +1,4 @@
-// import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import "./Chat.css";
 import { Avatar, IconButton } from '@mui/material'
 import AttachFileOutlinedIcon from '@mui/icons-material/AttachFileOutlined';
@@ -6,13 +6,29 @@ import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import InsertEmoticonOutlinedIcon from '@mui/icons-material/InsertEmoticonOutlined';
 import MicNoneOutlinedIcon from '@mui/icons-material/MicNoneOutlined';
+import axios from './axios'
+import { useStateValue } from '../context/StateProvider';
+
+export const Chat = ({ messages }) => {
+  const [seed, setSeed] = useState("")
+  const [input, setInput] = useState("")
+  const [{ user }, dispatch] = useStateValue()
+
+    const sendMessage = async (e) => {
+  e.preventDefault()
+        await axios.post('/messages/new', {
+            message: input,
+            name: user.displayName,
+            timestamp: new Date().toUTCString(),
+            received: true
+        })
+        setInput("")
+    }
 
 
-export const Chat = () => {
-//   const [seed, setSeed] = useState("")
-//     useEffect(() => {
-//         setSeed(Math.floor(Math.random() * 5000))
-//     }, [])
+    useEffect(() => {
+        setSeed(Math.floor(Math.random() * 5000))
+    }, [])
 
   return (
     <div className="chat">
@@ -20,8 +36,9 @@ export const Chat = () => {
           <Avatar/>
 
         <div className="chat__headerInfo">
-                    <h3>Room Name</h3>
-                    <p>Last seen at...</p>
+                    <h3>Dev Chuku</h3>
+                    <p>Last seen at {" "}{messages[messages.length -1]?.timestamp}
+                    </p>
                 </div>
                 <div className="chat__headerRight">
                    <IconButton>
@@ -36,36 +53,24 @@ export const Chat = () => {
                 </div>
       </div>
        <div className="chat__body">
-          <p className="chat__message">
-             <span className="chat__name">Eidos</span>
-                This is a message
-             <span className="chat__timestamp">
-                {new Date().toUTCString()}
-             </span>
-          </p>
-          <p className="chat__message chat__receiver">
-                    <span className="chat__name">Chuku</span>
-                    This is a message back
-                    <span className="chat__timestamp">
-                        {new Date().toUTCString()}
-                    </span>
-          </p>
-          <p className="chat__message">
-                    <span className="chat__name">Eidos</span>
-                    This is a message again again
-                    <span className="chat__timestamp">
-                        {new Date().toUTCString()}
-                    </span>
-          </p>
+
+              {messages.map(message => (
+                    <p className={`chat__message ${message.name === user.displayName && 'chat__receiver'}`}>
+                    {message.message}
+                    </p>
+                ))}
+
       </div>
        <div className="chat__footer">
           <InsertEmoticonOutlinedIcon />
              <form>
                <input
-                   placeholder="Type a message"
-                   type="text"
+                    value={input}
+                    onChange={e => setInput(e.target.value)}
+                    placeholder="Type a message"
+                    type="text"
                />
-               <button type="submit">Send a message</button>
+               <button onClick={sendMessage} type="submit">Send a message</button>
                </form>
            <MicNoneOutlinedIcon />
       </div>

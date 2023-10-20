@@ -5,12 +5,15 @@ import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { Avatar, IconButton } from "@mui/material";
 import SidebarChat from './SidebarChat';
+import { useStateValue } from '../context/StateProvider';
 
-export const Sidebar = () => {
+export const Sidebar = ({ messages }) => {
+  const [{ user }, dispatch] = useStateValue()
+
   return (
     <div className="sidebar">
             <div className="sidebar__header">
-          <Avatar src='https://fc05.deviantart.net/fs70/i/2010/089/8/0/__Doodle_4_Google__Round_2___by_Akanei_Rin.jpg'/>
+          <Avatar src={user?.photoURL}/>
               <div className="sidebar__headerRight">
                 <IconButton>
                   <DonutLargeOutlinedIcon />
@@ -32,9 +35,7 @@ type="text" />
               </div>
             </div>
             <div className="sidebar__chats">
-            <SidebarChat/>
-            <SidebarChat/>
-            <SidebarChat/>
+            <SidebarChat messages={messages}/>
             </div>
         </div>
   )

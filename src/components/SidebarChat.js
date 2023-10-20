@@ -2,13 +2,13 @@ import React from 'react'
 import './SidebarChat.css'
 import { Avatar } from '@mui/material'
 
-const SidebarChat = () => {
+const SidebarChat = ({ messages }) => {
   return (
     <div className='sidebarChat'>
         <Avatar/>
         <div className="sidebarChat__info">
-            <h2>Room name</h2>
-            <p>Last message...</p>
+            <h2>Dev Chuku</h2>
+                <p>{messages[messages.length -1]?.message}</p>
         </div>
     </div>
   )
